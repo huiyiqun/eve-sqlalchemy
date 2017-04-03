@@ -74,7 +74,8 @@ class registerSchema(object):
                 prop = desc.property
                 if prop.key in (config.LAST_UPDATED,
                                 config.DATE_CREATED,
-                                config.ETAG):
+                                config.ETAG,
+                                '_deleted'):
                     continue
                 if hasattr(prop, 'columns') and \
                    hasattr(prop.columns[0], 'foreign_keys') and \
