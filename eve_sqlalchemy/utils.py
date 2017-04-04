@@ -49,6 +49,8 @@ def sqla_object_to_dict(obj, fields):
         fields.append(config.LAST_UPDATED)
     if config.DATE_CREATED not in fields:
         fields.append(config.DATE_CREATED)
+    if config.DELETED not in fields:
+        fields.append(config.DELETED)
     if config.ETAG not in fields \
             and getattr(config, 'IF_MATCH', True):
         fields.append(config.ETAG)
