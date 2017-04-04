@@ -165,6 +165,15 @@ class SQL(DataLayer):
                                      parse_dictionary(sub_resource_lookup,
                                                       model))
 
+        if config.DOMAIN[resource]['soft_delete'] and not req.show_deleted:
+            # Soft delete filtering applied after validate_filters call as
+            # querying against the DELETED field must always be allowed when
+            # soft_delete is enabled
+            args['spec'] = \
+                self.combine_queries(
+                    args['spec'],
+                    [getattr(model, config.DELETED).isnot(True)])
+
         if req.if_modified_since:
             updated_filter = sqla_op.gt(getattr(model, config.LAST_UPDATED),
                                         req.if_modified_since)
